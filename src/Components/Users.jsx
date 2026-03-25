@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-
 function Users() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -24,29 +24,47 @@ function Users() {
     fetchProducts();
   }, []);
 
+  
+  const filteredProducts = products.filter((item) =>
+    item.title.toLowerCase().includes(search.toLowerCase()),
+  );
+
   if (loading) return <p className="p-4 text-center">Loading products...</p>;
 
   return (
-    
-    <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 p-6">
-      {products.map((item) => (
-        <div
-          key={item.id}
-          className="border p-4 rounded shadow hover:shadow-lg cursor-pointer"
-          onClick={() => navigate(`/product/${item.id}`)}
-        >
-          <img
-            src={item.images[0]}
-            alt={item.title}
-            className="w-full h-40 object-cover rounded"
-          />
-          <div className="pt-4">
-            <p className="border-2 border-b-blue-50"></p>
-          </div>
-          <h2 className="font-bold mt-2">{item.title}</h2>
-          <p className="text-green-600">${item.price}</p>
+    <div className="p-5">
+      <div className="text-center">
+        <input
+          type="text"
+          placeholder="Search products..."
+          className="border rounded-xl p-2 mb-6 w-full lg:w-100 text-center"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
+      {filteredProducts.length === 0 ? (
+        <p>No results found</p>
+      ) : (
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+          {filteredProducts.map((item) => (
+            <div
+              key={item.id}
+              className="border p-4 rounded shadow hover:shadow-lg cursor-pointer"
+              onClick={() => navigate(`/product/${item.id}`)}
+            >
+              <img
+                src={item.images[0]}
+                alt={item.title}
+                className="w-full h-40 object-cover rounded"
+              />
+
+              <h2 className="font-bold mt-2">{item.title}</h2>
+              <p className="text-green-600">${item.price}</p>
+            </div>
+          ))}
         </div>
-      ))}
+      )}
     </div>
   );
 }
