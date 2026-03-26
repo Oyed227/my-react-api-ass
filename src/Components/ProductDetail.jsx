@@ -1,5 +1,6 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { FaArrowCircleLeft } from "react-icons/fa";
 
 function ProductDetail() {
   const { id } = useParams();
@@ -30,7 +31,6 @@ function ProductDetail() {
       <p className="p-4 text-center text-red-500">
         Error: {error} <br />
         <Link to="/users" className="text-blue-600 hover:text-blue-800">
-          Go back to products
         </Link>
       </p>
     );
@@ -38,11 +38,8 @@ function ProductDetail() {
   return (
     <div className="p-5 mx-auto">
       <div className="p-4 max-w-md mx-auto border rounded shadow">
-        <Link
-          to="/users"
-          className="inline-flex items-center mb-4 text-blue-600 hover:text-blue-800"
-        >
-          Back
+        <Link to="/users" className=" text-2xl hover:text-blue-800">
+          <FaArrowCircleLeft />
         </Link>
         <img
           src={product.images[0]}
@@ -55,6 +52,7 @@ function ProductDetail() {
         <h1 className="font-bold text-2xl mt-4">{product.title}</h1>
         <p className="text-green-600 text-xl mt-2">${product.price}</p>
         <p className="mt-2 text-gray-700">{product.description}</p>
+        <p className="mt-2 text-gray-700">{product.id}</p>
       </div>
     </div>
   );

@@ -11,8 +11,7 @@ function App() {
         <Route path="/" element={<Navigate />} />
         <Route path="/users" element={<Users />} />
         <Route path="/product/:id" element={<ProductDetail />} />
-        </Routes>
-
+      </Routes>
 
       <Footer />
     </>

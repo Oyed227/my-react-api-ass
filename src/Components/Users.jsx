@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaArrowCircleLeft } from "react-icons/fa";
+
 
 function Users() {
   const [products, setProducts] = useState([]);
@@ -11,7 +13,7 @@ function Users() {
     async function fetchProducts() {
       try {
         const res = await fetch(
-          "https://dummyjson.com/products?limit=21&sortBy=title&order=asc",
+          "https://dummyjson.com/products?limit=42&sortBy=title&order=asc",
         );
         const data = await res.json();
         setProducts(data.products);
@@ -31,6 +33,7 @@ function Users() {
 
   if (loading) return <p className="p-4 text-center">Loading products...</p>;
 
+  
   return (
     <div className="p-5">
       <div className="text-center">
@@ -43,10 +46,12 @@ function Users() {
         />
       </div>
 
+      <button onClick={() => navigate(-1)}> <p className="text-2xl mb-3"><FaArrowCircleLeft /></p></button>
+
       {filteredProducts.length === 0 ? (
         <p>No results found</p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 gap-6">
           {filteredProducts.map((item) => (
             <div
               key={item.id}
